@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
 def test_ecommerce_website_login():
+    # test case for automation login
     driver=Chrome()
     driver.maximize_window()
     driver.implicitly_wait(20)
@@ -14,7 +15,10 @@ def test_ecommerce_website_login():
     driver.find_element(By.ID,"continue").click()
     driver.find_element(By.ID,"ap_password").send_keys('Ganinaik123@')
     driver.find_element(By.ID,"signInSubmit").click()
-    time.sleep(50)
+    # driver.find_element(By.XPATH,"//input[@type='tel']").click()
+    # time.sleep(20)
+    # driver.find_element(By.XPATH,"//span[text()='Submit code']").submit()
+    # sometimes application asks for otp. that moment we cant automate the otp. so we can take above (comment out) code. that time we can give the otp value manually
     try:
         assert driver.find_element(By.XPATH,"//span[text()='Hello, Ganesh']").is_displayed()
         print("PASS:User can Login and User Account Name displayed in Home Page ")
@@ -22,37 +26,52 @@ def test_ecommerce_website_login():
         print("FAIL:User cannot  Login and User Account Name cannot displayed in Home Page")
 
 def test_search_product():
+    # test automation code for search a product
     driver = Chrome()
     driver.maximize_window()
     driver.implicitly_wait(20)
     driver.get("https://www.amazon.in/")
-    driver.find_element(By.ID,"twotabsearchtextbox").send_keys("HP laptop")
-    driver.find_element(By.ID,"twotabsearchtextbox").screenshot('search.png')
+    driver.find_element(By.ID,"twotabsearchtextbox").send_keys("mobile cover")
+    driver.find_element(By.ID, "twotabsearchtextbox").screenshot('search_product.png')
     driver.find_element(By.ID,"nav-search-submit-button").click()
-    element=driver.find_element(By.XPATH,"(//a[@target='_blank'])[3]")
+    element=driver.find_element(By.XPATH,"//span[contains(text(),'Solimo Plastic Mobile Cover')]")
     actions=ActionChains(driver)
     actions.scroll_to_element(element).perform()
     element.click()
-    product_text=driver.find_element(By.XPATH,"(//span[contains(.,'HP Envy x360, Enhanced by AI')])[3]").text
-    print(product_text)
-    product_price=driver.find_element(By.XPATH,"(//span[contains(.,'HP Envy x360, Enhanced by AI')])[3]/../../../..//span[@class='a-price-whole']").text
-    print(product_price)
     time.sleep(5)
 
+def test_text_and_price_of_product():
+    # test automation code for the text and price of the product
+    driver = Chrome()
+    driver.maximize_window()
+    driver.implicitly_wait(20)
+    driver.get("https://www.amazon.in/")
+    driver.find_element(By.ID,"twotabsearchtextbox").send_keys("mobile cover")
+    driver.find_element(By.ID, "twotabsearchtextbox").screenshot('search_product.png')
+    driver.find_element(By.ID,"nav-search-submit-button").click()
+    element=driver.find_element(By.XPATH,"//span[contains(text(),'Solimo Plastic Mobile Cover')]")
+    actions=ActionChains(driver)
+    actions.scroll_to_element(element).perform()
+    element.click()
+    product_text = driver.find_element(By.XPATH, "(//span[contains(text(),'Solimo Plastic Mobile Cover')])[1]").text
+    print(product_text)
+    product_price=driver.find_element(By.XPATH,"(//span[contains(text(),'Solimo Plastic Mobile Cover')]/../../../..//span[@class='a-price-whole'])[1]").text
+    print(product_price)
+    time.sleep(2)
 
-# def test_purchase_a_product():
-#     driver = Chrome()
-#     driver.maximize_window()
-#     driver.implicitly_wait(20)
-#     driver.get("https://www.amazon.in/")
-#     driver.find_element(By.ID,"twotabsearchtextbox").send_keys("HP laptop")
-#     driver.find_element(By.ID, "nav-search-submit-button").click()
-#     element = driver.find_element(By.XPATH, "(//a[@target='_blank'])[3]")
-#     actions = ActionChains(driver)
-#     actions.scroll_to_element(element).perform()
-#     element.click()
-#     driver.find_element(By.NAME,"submit.buy-now").click()
-#     driver.find_element(By.ID,"orderSummaryPrimaryActionBtn-announce").click()
+def test_purchase_the_product():
+    # test automation code for purchase a product
+    driver = Chrome()
+    driver.maximize_window()
+    driver.implicitly_wait(50)
+    driver.get("https://www.amazon.in/")
+    driver.find_element(By.ID, "twotabsearchtextbox").send_keys("pen")
+    driver.find_element(By.ID, "nav-search-submit-button").click()
+    element = driver.find_element(By.XPATH, "(//span[contains(text(),'Reynolds D FINE BALLPEN 5 CT - BLUE')])[1]/../../../..//button[text()='Add to cart']")
+    actions = ActionChains(driver)
+    actions.scroll_to_element(element).perform()
+    element.click()
+    time.sleep(5)
 
 
 
