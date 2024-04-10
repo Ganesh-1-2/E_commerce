@@ -15,9 +15,9 @@ def test_ecommerce_website_login():
     driver.find_element(By.ID,"continue").click()
     driver.find_element(By.ID,"ap_password").send_keys('Ganinaik123@')
     driver.find_element(By.ID,"signInSubmit").click()
-    # driver.find_element(By.XPATH,"//input[@type='tel']").click()
-    # time.sleep(20)
-    # driver.find_element(By.XPATH,"//span[text()='Submit code']").submit()
+    driver.find_element(By.XPATH,"//input[@type='tel']").click()
+    time.sleep(20)
+    driver.find_element(By.XPATH,"//span[text()='Submit code']").submit()
     # sometimes application asks for otp or CAPTCHA. that moment we cant automate the application. so we can take above (comment out) code. that time we can give the otp value manually
     try:
         assert driver.find_element(By.XPATH,"//span[text()='Hello, Ganesh']").is_displayed()
