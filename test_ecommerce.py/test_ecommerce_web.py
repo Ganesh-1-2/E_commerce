@@ -18,7 +18,7 @@ def test_ecommerce_website_login():
     # driver.find_element(By.XPATH,"//input[@type='tel']").click()
     # time.sleep(20)
     # driver.find_element(By.XPATH,"//span[text()='Submit code']").submit()
-    # sometimes application asks for otp. that moment we cant automate the otp. so we can take above (comment out) code. that time we can give the otp value manually
+    # sometimes application asks for otp or CAPTCHA. that moment we cant automate the application. so we can take above (comment out) code. that time we can give the otp value manually
     try:
         assert driver.find_element(By.XPATH,"//span[text()='Hello, Ganesh']").is_displayed()
         print("PASS:User can Login and User Account Name displayed in Home Page ")
@@ -59,19 +59,7 @@ def test_text_and_price_of_product():
     print(product_price)
     time.sleep(2)
 
-def test_purchase_the_product():
-    # test automation code for purchase a product
-    driver = Chrome()
-    driver.maximize_window()
-    driver.implicitly_wait(50)
-    driver.get("https://www.amazon.in/")
-    driver.find_element(By.ID, "twotabsearchtextbox").send_keys("pen")
-    driver.find_element(By.ID, "nav-search-submit-button").click()
-    element = driver.find_element(By.XPATH, "(//span[contains(text(),'Reynolds D FINE BALLPEN 5 CT - BLUE')])[1]/../../../..//button[text()='Add to cart']")
-    actions = ActionChains(driver)
-    actions.scroll_to_element(element).perform()
-    element.click()
-    time.sleep(5)
+
 
 
 
